@@ -11,7 +11,7 @@ stages:
     jobs:
       - job: 'validateandtest'
         pool:
-          vmimage: windows - latest
+          vmimage: 'windows-latest'
         steps:
           - task: AzureResourceManagerTemplateDeployment@3
             displayName: "Check if the template is in a correct format"
