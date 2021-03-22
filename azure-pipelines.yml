@@ -24,23 +24,3 @@ stages:
               location: 'West Europe'
               templateLocation: 'Linked artifact'
               deploymentMode: 'Incremental'
-          - task: PowerShell@2
-            displayName: "Install Powershell module"
-            inputs:
-              targetType: 'inline'
-              script: 'Install-Module Az.Resources -RequiredVersion 1.12.1-preview -AllowPrerelease -Force -Scope CurrentUser'
-          - task: AzurePowerShell@5
-            displayName: "display the resources"
-            inputs:
-              azureSubscription: 'RoehmDevOpsConnection'
-              ScriptType: 'InlineScript'
-              Inline: |
-                $Parameters = @{
-                  ResourcegroupName     = "RoehmDevOps"
-                  Templatefile          = ".\StorageAccount\azuredeploy.json"
-                  TemplateParameterfile = ".\StorageAccount\Testdeploy.parameters.json"
-                  Mode                  = 'Incremental'
-                 }
-                $Result = Get-AzResourceGroupDeploymentWhatIfResult @Parameters
-                $Result
-              azurePowerShellVersion: 'LatestVersion'
