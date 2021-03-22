@@ -17,7 +17,7 @@ stages:
             displayName: "Check if the template is in a correct format"
             inputs:
               deploymentScope: 'Resource Group'
-              azureResourceManagerConnection: 'RoehmDevOpsConnection'
+              azureResourceManagerConnection: 'DevopsRöhm Service Connection'
               subscriptionId: '6c7406cd-24df-44b1-86a9-fce7ffa659c6'
               action: 'Create Or Update Resource Group'
               resourceGroupName: 'RoehmDevOps'
