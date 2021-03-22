@@ -13,6 +13,7 @@ stages:
         pool:
           vmimage: windows - latest
         steps:
+          #This task will check if the template is in a correct format, simular to running Test-AzResourceGroupDeployment locally
           - task: AzureResourceManagerTemplateDeployment@3
             inputs:
               deploymentScope: 'Resource Group'
@@ -20,24 +21,10 @@ stages:
               subscriptionId: '6c7406cd-24df-44b1-86a9-fce7ffa659c6'
               action: 'Create Or Update Resource Group'
               resourceGroupName: 'RoehmDevOps'
-              location: 'North Europe'
+              location: 'West Europe'
               templateLocation: 'Linked artifact'
               deploymentMode: 'Incremental'
           - task: PowerShell@2
             inputs:
               targetType: 'inline'
               script: 'Install-Module Az.Resources -RequiredVersion 1.12.1-preview -AllowPrerelease -Force -Scope CurrentUser'
-          - task: AzurePowerShell@5
-            inputs:
-              azureSubscription: 'RoehmDevOpsConnection'
-              ScriptType: 'InlineScript'
-              Inline: |
-                $Parameters = @{
-                  ResourcegroupName     = "RoehmDevOps"
-                  Templatefile          = ".\StorageAccount\azuredeploy.json"
-                  TemplateParameterfile = ".\StorageAccount\azuredeploy.parameters.json"
-                  Mode                  = 'Incremental'
-                 }
-                $Result = Get-AzResourceGroupDeploymentWhatIfResult @Parameters
-                $Result
-              azurePowerShellVersion: 'LatestVersion'
